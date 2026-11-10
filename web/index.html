@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Y50 · Diseñador de etiquetas</title>
+<link rel="stylesheet" href="style.css">
+<script src="vendor/qrcode-generator.js"></script>
+<script src="vendor/JsBarcode.all.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>Y50 <span>· diseñador de etiquetas</span></h1>
+  <div class="hactions">
+    <button id="btnConn" onclick="refreshInfo()">Impresora</button>
+    <span id="statusChip" class="chip off">—</span>
+    <button id="btnFeed" onclick="feed()">⬅ Alimentar</button>
+    <button id="btnPrint" class="primary" onclick="doPrint()">🖨 Imprimir</button>
+  </div>
+</header>
+
+<main>
+  <aside>
+    <section>
+      <h2>Herramientas</h2>
+      <div class="tools">
+        <button onclick="addText()">Aa</button>
+        <button onclick="addQR()">QR</button>
+        <button onclick="addBarcode()">|||</button>
+        <button onclick="addRect()">▭</button>
+        <button onclick="addImage()">🖼</button>
+        <input type="file" id="fileImg" accept="image/*" hidden>
+      </div>
+    </section>
+
+    <section>
+      <h2>Etiqueta</h2>
+      <label>Ancho mm <input type="number" id="inW" min="20" max="50" value="50" onchange="resizePaper()"></label>
+      <label>Alto mm <input type="number" id="inH" min="15" max="200" value="30" onchange="resizePaper()"></label>
+      <label>Copias <input type="number" id="inCopies" min="1" max="50" value="1"></label>
+      <label>Densidad <input type="number" id="inDensity" min="4" max="14" value="8"></label>
+    </section>
+
+    <section id="props" class="hidden">
+      <h2>Propiedades</h2>
+      <div id="propFields"></div>
+      <div class="tools">
+        <button onclick="duplicate()">⧉ Duplicar</button>
+        <button class="danger" onclick="removeSel()">🗑 Eliminar</button>
+      </div>
+    </section>
+
+    <section class="adv">
+      <h2>Avanzado</h2>
+      <input type="text" id="rawHex" placeholder="bytes en hex (ej. 0104010000)">
+      <button onclick="sendRaw()">Enviar crudo</button>
+    </section>
+
+    <section>
+      <h2>Prediseños</h2>
+      <div class="tools">
+        <button onclick="loadPreset('pequeño')">pequeño</button>
+        <button onclick="loadPreset('precio')">precio</button>
+        <button onclick="loadPreset('fecha')">fecha</button>
+        <button onclick="loadPreset('vacío')">limpiar</button>
+      </div>
+    </section>
+  </aside>
+
+  <div id="stage">
+    <div id="canvasWrap">
+      <canvas id="paper"></canvas>
+      <div id="handles"></div>
+    </div>
+    <p class="hint">Arrastra para mover · esquinas para redimensionar · Supr elimina · flechas mueven 1 mm · guardar automático</p>
+  </div>
+</main>
+
+<footer id="log">Y50 lista.</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
